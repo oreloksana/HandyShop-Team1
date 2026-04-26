@@ -1,0 +1,42 @@
+%% Projekt Architektur
+%% Team1 - HandyShop
+%% BHT - Sicherheitsmanagement - SS2026
+
+flowchart LR
+    %% Define Styles
+    classDef mainBox fill:#fff,stroke:#333,stroke-width:2px;
+    classDef containerBox fill:#f9f9f9,stroke:#333,stroke-width:2px,stroke-dasharray: 5 5;
+    classDef textNode fill:none,stroke:none,font-size:12px;
+
+    subgraph Webserver [Web-server]
+        direction TB
+        ExtWebApp[Online Shop]
+        IntWebApp[Mitarbeiter Portal]
+    end
+    
+    subgraph Appserver [Anwendungs-Server]
+        direction TB
+        ExtApps[Shop Anwendungen]
+        IntApps[Internal Anwendungen]
+    end
+    
+    subgraph DBserver [Datenbank]
+        direction TB
+        Datenbank[(DB Cluster)]
+    end
+    
+    %% Connections (Main Flow - Updated per instructions)
+    Browser --> Firewall & Vpn
+    
+    Firewall --> ExtWebApp
+    Vpn      --> IntWebApp
+    
+    ExtWebApp --> ExtApps
+    IntWebApp --> IntApps
+    
+    ExtApps --> Datenbank
+    IntApps --> Datenbank
+
+    %% Apply Styles
+    class Browser,Firewall,Vpn,ExtWebApp,IntWebApp,ExtApps,IntApps,Datenbank mainBox;
+    class Webserver,Appserver,DBserver containerBox;
